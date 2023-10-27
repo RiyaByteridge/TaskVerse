@@ -1,3 +1,3 @@
 import useAxiosGetHook from "./useAxiosGet.hook";
-
-export { useAxiosGetHook };
+import useAxiosPostHook from "./useAxiosPost.hook";
+export { useAxiosGetHook ,useAxiosPostHook};

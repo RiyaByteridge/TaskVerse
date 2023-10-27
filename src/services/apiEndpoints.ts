@@ -3,4 +3,9 @@ export const API_ENDPOINT = {
   auth: {
     login: "/auth/login",
   },
+  products:{
+    getAllProducts:"/products",
+    updateAProdunct:"/products/add"
+  },
+  
 };
