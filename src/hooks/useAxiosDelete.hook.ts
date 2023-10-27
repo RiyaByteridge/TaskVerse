@@ -10,14 +10,14 @@ const useAxiosDelete = ({ url }: AxiosProps) => {
   
   const [isError, setError] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
-  const [isDeleted, setDelete] = useState(false);
+  const [isDeleted, setDeleted] = useState(false);
   const [errorMessage ,setErrorMessage]=useState('');
  
 
   const deleteData = useCallback(async () => {
     try{
         setSuccess(false);
-        setDelete(false);
+        setDeleted(false);
         const response = await axiosClient.delete(url);
         if(response){
             console.log("Deleted Sucessfully!!");
@@ -30,13 +30,13 @@ const useAxiosDelete = ({ url }: AxiosProps) => {
         setErrorMessage(err.message)
     }
     finally{
-        setDelete(false);
+        setDeleted(false);
     }
   }, [url]);
 
   useEffect(() => {
     deleteData();
-  }, [deleteData]);
+  }, []);
 
   return {isDeleted ,isError,isSuccess,errorMessage}
 };
