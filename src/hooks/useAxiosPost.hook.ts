@@ -18,11 +18,9 @@ const AxiosPost = ({ url }: UseAxiosProps) => {
       setSuccess(false);
       setError(false);
       const response = await axiosClient.post(url, {
-        method:'POST',
-        body: JSON.stringify({
-          title: 'BMW Pencil',
-          
-        })
+        method: "POST",
+
+        title: "BMW Pencil",
       });
       if (response.data) {
         setData(response.data);
@@ -31,9 +29,9 @@ const AxiosPost = ({ url }: UseAxiosProps) => {
     } catch (error) {
       const err = error as unknown as AxiosError;
       setErrorMessage(err.message);
-      setError(true)
+      setError(true);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }, [url]);
 

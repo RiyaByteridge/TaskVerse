@@ -18,9 +18,8 @@ const useAxiosUpdateHook = ({ url }: AxiosProps) => {
       setError(false);
       const response = await axiosClient.put(url, {
         method: "PUT",
-        body: JSON.stringify({
-          title: "Update to Labo",
-        }),
+
+        title: "Update to Labo",
       });
       if (response.data) {
         setData(response.data);
