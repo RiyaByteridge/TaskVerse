@@ -32,7 +32,7 @@ const useAxiosUpdateHook = ({ url }: AxiosProps) => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [url]);
 
   useEffect(() => {
     updateData();

@@ -5,7 +5,8 @@ export const API_ENDPOINT = {
   },
   products:{
     getAllProducts:"/products",
-    updateAProdunct:"/products/add"
+    updateAProdunct:"/products/add",
+    deleteAProduct:"/products/1"
   },
   
 };
