@@ -36,7 +36,7 @@ const useAxiosDelete = ({ url }: AxiosProps) => {
 
   useEffect(() => {
     deleteData();
-  }, []);
+  }, [deleteData]);
 
   return {isDeleted ,isError,isSuccess,errorMessage}
 };
