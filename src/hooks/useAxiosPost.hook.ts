@@ -17,10 +17,17 @@ const AxiosPost = ({ url }: UseAxiosProps) => {
     try {
       setSuccess(false);
       setError(false);
+      setLoading(true);
       const response = await axiosClient.post(url, {
-        method: "POST",
-
+        // method: "POST",
         title: "BMW Pencil",
+        description: "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality",
+        price: 30000000,
+        discountPercentage: 2.92,
+        rating: 4.92,
+        stock: 54,
+        brand: "Golden",
+        category: "Sports Car",
       });
       if (response.data) {
         setData(response.data);

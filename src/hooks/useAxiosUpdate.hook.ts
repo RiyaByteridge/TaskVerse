@@ -16,10 +16,16 @@ const useAxiosUpdateHook = ({ url }: AxiosProps) => {
     try {
       setSucess(false);
       setError(false);
+      setLoading(true);
       const response = await axiosClient.put(url, {
-        method: "PUT",
-
+        // method: "PUT",
         title: "Update to Labo",
+        description: "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality",
+        price: 30000000,
+        discountPercentage: 2.92,
+        rating: 4.92,
+        stock: 54,
+       
       });
       if (response.data) {
         setData(response.data);

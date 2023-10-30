@@ -16,6 +16,7 @@ const useAxiosGet = ({ url }: UseAxiosProps) => {
     try {
       setSuccess(false);
       setError(false);
+      setLoading(true);
       const response = await axiosClient.get(url);
       if (response.data) {
         setData(response.data);

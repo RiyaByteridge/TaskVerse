@@ -9,19 +9,22 @@ interface AxiosProps {
 const useAxiosDelete = ({ url }: AxiosProps) => {
   
   const [isError, setError] = useState(false);
+  const [isLoading , setLoading] = useState(false)
   const [isSuccess, setSuccess] = useState(false);
-  const [isDeleted, setDeleted] = useState(false);
+  const[data ,setData] = useState("")
   const [errorMessage ,setErrorMessage]=useState('');
  
 
   const deleteData = useCallback(async () => {
     try{
         setSuccess(false);
-        setDeleted(false);
+        setLoading(true);
+        setError(false);
         const response = await axiosClient.delete(url);
         if(response){
-            console.log("Deleted Sucessfully!!");
+           setData(response.data)
             setSuccess(true)
+            setLoading(true)
         }
     }
     catch(error){
@@ -30,7 +33,7 @@ const useAxiosDelete = ({ url }: AxiosProps) => {
         setErrorMessage(err.message)
     }
     finally{
-        setDeleted(false);
+        setLoading(false)
     }
   }, [url]);
 
@@ -38,6 +41,6 @@ const useAxiosDelete = ({ url }: AxiosProps) => {
     deleteData();
   }, [deleteData]);
 
-  return {isDeleted ,isError,isSuccess,errorMessage}
+  return {isLoading,data ,isError,isSuccess,errorMessage}
 };
 export default useAxiosDelete;
