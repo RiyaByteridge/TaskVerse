@@ -1,82 +1,65 @@
 import { useState, useEffect, useCallback } from "react";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse, AxiosError, AxiosRequestConfig } from "axios";
 import { axiosClient } from "../services/axios-interceptor";
 
-interface AxiosProps {
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+
+interface UseAxiosProps {
   url: string;
-}
-interface AxiosTypecheck {
-  (apiType: string): string;
+  method: HttpMethod;
+  payload?: object;
+  config?: AxiosRequestConfig;
 }
 
-const types: AxiosTypecheck = function (apiType: string) {
-  return apiType;
-};
-
-const useAxios = ({ url }: AxiosProps, apiType: AxiosTypecheck) => {
+const useAxios = ({ url, method, payload, config }: UseAxiosProps) => {
   const [data, setData] = useState<AxiosResponse | null>(null);
   const [isLoading, setLoading] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const newApi = apiType.toString();
-  const apiCalls = useCallback(async () => {
+  const axiosMethods: Record<
+    HttpMethod,
+    (
+      url: string,
+      payload?: object,
+      config?: AxiosRequestConfig
+    ) => Promise<AxiosResponse>
+  > = {
+    GET: axiosClient.get,
+    POST: axiosClient.post,
+    PUT: axiosClient.put,
+    DELETE: axiosClient.delete,
+  };
+
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setSuccess(false);
       setError(false);
-      if (newApi === "GET") {
-        const response = await axiosClient.get(url);
-        if (response.data) {
-          setData(response.data);
-          setSuccess(true);
-        }
-      } else if (newApi === "POST") {
-        const response = await axiosClient.post(url, {
-          title: "BMW Pencil",
-          description:
-            "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality",
-          price: 30000000,
-          discountPercentage: 2.92,
-          rating: 4.92,
-          stock: 54,
-          brand: "Golden",
-          category: "Sports Car",
-        });
-        if (response.data) {
-          setData(response.data);
-          setSuccess(true);
-        }
-      } else if (newApi === "PUT") {
-        const response = await axiosClient.put(url, {
-          title: "Update to Labo",
-        });
-        if (response.data) {
-          setData(response.data);
-        }
-      } else if (newApi === "DELETE") {
-        const response = await axiosClient.delete(url);
-        if (response) {
-          setData(response.data);
-          setSuccess(true);
-          setLoading(true);
-        }
+      setData(null);
+
+      const response = await axiosMethods[method](url, payload, config);
+      if (response.data) {
+        setData(response.data);
+        setSuccess(true);
       }
     } catch (error) {
       const err = error as unknown as AxiosError;
+
       setError(true);
       setErrorMessage(err.message);
     } finally {
       setLoading(false);
     }
-  }, [url, newApi]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
 
-  types("GET");
   useEffect(() => {
-    apiCalls();
-  }, [apiCalls]);
+    if (method === "GET") fetchData();
+  }, [fetchData, method]);
 
-  return { data, isLoading, isSuccess, isError, errorMessage };
+  return { data, isSuccess, isLoading, isError, errorMessage, fetchData };
 };
+
 export default useAxios;
