@@ -1,3 +1,3 @@
-import useAxios from "./useAxios.hook";
+import useAxiosHook from "./useAxios.hook";
 
-export {useAxios}
+export {useAxiosHook}
