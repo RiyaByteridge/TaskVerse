@@ -59,7 +59,7 @@ const useAxios = ({ url, method, payload, config }: UseAxiosProps) => {
     if (method === "GET") fetchData();
   }, [fetchData, method]);
 
-  return { data, isSuccess, isLoading, isError, errorMessage, fetchData };
+  return { data, isSuccess, isLoading, isError, errorMessage, mutate:fetchData };
 };
 
 export default useAxios;
