@@ -19,7 +19,9 @@ export default {
       white:"#FFFFFF",
       focusBorder:"#c4b5fd",
       inputBorderColor:"#624dff",
-      primaryButton:"#3730a3"
+      primaryButton:"#3730a3",
+      errorMessageColor:"#f5483F",
+      errorMessageFocusColor:"#fecaca"
     }
   },
   plugins: [],
